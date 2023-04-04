@@ -14,7 +14,8 @@ class Critic extends Model
         'score',
         'comment',
         'user_id',
-        'film_id'];
+        'film_id'
+    ];
 
     public function film(): BelongsTo
     {
