@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FilmActorController;
 use App\Http\Controllers\FilmController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('films', [FilmController::class, 'index']);
 Route::get('films/{id}', [FilmController::class, 'show']);
+Route::get('films/{id}/actors', [FilmActorController::class, 'index']);
