@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FilmResource;
+use App\Models\Film;
 use Illuminate\Http\Request;
+use Exception;
 
 class FilmController extends Controller
 {
@@ -11,7 +14,14 @@ class FilmController extends Controller
      */
     public function index()
     {
-        //
+        try
+        {
+            return FilmResource::collection(Film::all())->response()->setStatusCode(200);
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur serveur');
+        }
     }
 
     /**
