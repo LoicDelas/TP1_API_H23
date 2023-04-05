@@ -22,7 +22,7 @@ class FilmController extends Controller
         {
             $films = $this->FilterRequest();
 
-            return FilmResource::collection($films)->response()->setStatusCode(200);
+            return FilmResource::collection($films->paginate(20))->response()->setStatusCode(200);
         }
         catch (Exception $ex)
         {
@@ -107,6 +107,6 @@ class FilmController extends Controller
         $films = is_null($max_length) || empty($max_length) || is_nan($max_length) ? $films :
             $films->where('length', '<=', $max_length);
 
-        return $films->get();
+        return $films;
     }
 }
