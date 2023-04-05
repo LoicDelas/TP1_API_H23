@@ -9,6 +9,7 @@ use App\Models\Film;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Exception;
+use function PHPUnit\Framework\isNull;
 
 class FilmController extends Controller
 {
@@ -19,7 +20,9 @@ class FilmController extends Controller
     {
         try
         {
-            return FilmResource::collection(Film::all())->response()->setStatusCode(200);
+            $films = $this->FilterRequest();
+
+            return FilmResource::collection($films->paginate(20))->response()->setStatusCode(200);
         }
         catch (Exception $ex)
         {
@@ -84,5 +87,26 @@ class FilmController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function FilterRequest()
+    {
+        $keywords = request('keywords');
+        $rating = strtoupper(request('rating'));
+        $max_length = request('max-length');
+
+        $films = Film::select();
+
+        $films = is_null($keywords) || empty($keywords) ? $films :
+            $films->where('title', 'like', '%' . $keywords . '%')
+                ->orWhere('description', 'like', '%' . $keywords . '%');
+
+        $films = is_null($rating) || empty($rating) ? $films :
+            $films->where('rating', $rating);
+
+        $films = is_null($max_length) || empty($max_length) || is_nan($max_length) ? $films :
+            $films->where('length', '<=', $max_length);
+
+        return $films;
     }
 }
