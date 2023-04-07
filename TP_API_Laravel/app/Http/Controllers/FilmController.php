@@ -92,7 +92,7 @@ class FilmController extends Controller
     private function FilterRequest()
     {
         $keywords = request('keywords');
-        $rating = strtoupper(request('rating'));
+        $rating = request('rating');
         $max_length = request('max-length');
 
         $films = Film::select();
