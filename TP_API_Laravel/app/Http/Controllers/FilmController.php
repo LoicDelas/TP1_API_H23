@@ -98,13 +98,15 @@ class FilmController extends Controller
         $films = Film::select();
 
         $films = empty($keywords) ? $films :
-            $films->where('title', 'like', '%' . $keywords . '%')
-                ->orWhere('description', 'like', '%' . $keywords . '%');
+            $films->where(function($query) use ($keywords) {
+                $query->where('title', 'like', '%' . $keywords . '%')
+                      ->orWhere('description', 'like', '%' . $keywords . '%');
+            });
 
         $films = empty($rating) ? $films :
-            $films->where('rating', $rating);
+            $films->Where('rating', $rating);
 
         return empty($max_length) || is_nan($max_length) ? $films :
-            $films->where('length', '<=', $max_length);
+            $films->Where('length', '<=', $max_length);
     }
 }
