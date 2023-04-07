@@ -104,9 +104,9 @@ class FilmController extends Controller
             });
 
         $films = empty($rating) ? $films :
-            $films->Where('rating', $rating);
+            $films->where('rating', $rating);
 
         return empty($max_length) || is_nan($max_length) ? $films :
-            $films->Where('length', '<=', $max_length);
+            $films->where('length', '<=', $max_length);
     }
 }
