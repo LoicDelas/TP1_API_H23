@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use InvalidArgumentException;
 
 class LoginController extends Controller
 {
@@ -22,10 +23,6 @@ class LoginController extends Controller
            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-//        if (!Auth::attempt($credentials)) {
-//            abort(401, 'Credentials not found');
-//        }
 
         if (Auth::attempt($credentials)) {
             try
@@ -58,28 +55,31 @@ class LoginController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'last_name' => ['required'],
-            'first_name' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed']
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed'
         ]);
 
-        $user = User::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => 2
-        ]);
+        try {
+            $user = User::create([
+                'last_name' => $request->last_name,
+                'first_name' => $request->first_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => 2
+            ]);
 
-        //$token = $user->createToken('Jeton de ' . $user->email);
-
-        return response()
-            ->json([
-                'user' => new UserResource($user),
-                //'token' => $token->plainTextToken
-            ])
-            ->setStatusCode(201);
+            return response()
+                ->json([
+                    'user' => new UserResource($user),
+                ])
+                ->setStatusCode(201);
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur serveur');
+        }
     }
 
     public function logout()
