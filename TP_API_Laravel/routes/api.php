@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\FilmActorController;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('login', [LoginController::class, 'authenticate']);
+Route::post('register', [LoginController::class, 'register']);
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+
+//Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum')->name('profile');
+
+
 Route::get('films', [FilmController::class, 'index']);
 Route::get('films/{id}', [FilmController::class, 'show']);
 Route::get('films/{id}/actors', [FilmActorController::class, 'index']);
+//::post('login', [LoginController::class, 'authenticate'])->name('login');
