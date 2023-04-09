@@ -90,7 +90,50 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = $request->user();
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+
+        if ($user->email != $request->email)
+        {
+            $request->validate(['email' => 'email|unique:users']);
+        }
+
+        try {
+            $user->email = $request->email;
+            $user->save();
+
+            return (new UserResource($user))
+                ->response()
+                ->setStatusCode(204);
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur Serveur');
+        }
+    }
+
+    public function updatePassword(Request $request, string $id)
+    {
+        $request->validate([
+            'old_password' => 'current_password',
+            'password' => 'required|confirmed'
+        ]);
+
+        $user = $request->user();
+
+        try {
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return (new UserResource($user))
+                ->response()
+                ->setStatusCode(204);
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur Serveur');
+        }
     }
 
     /**
