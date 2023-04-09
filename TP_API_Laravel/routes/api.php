@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [LoginController::class, 'authenticate']);
-Route::post('register', [LoginController::class, 'register']);
+Route::post('users', [UserController::class, 'store']);
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum', 'valid.user');

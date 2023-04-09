@@ -52,36 +52,6 @@ class LoginController extends Controller
         ])->onlyInput('email')->setStatusCode(401);
     }
 
-    public function register(Request $request)
-    {
-        $request->validate([
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
-        ]);
-
-        try {
-            $user = User::create([
-                'last_name' => $request->last_name,
-                'first_name' => $request->first_name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role_id' => 2
-            ]);
-
-            return response()
-                ->json([
-                    'user' => new UserResource($user),
-                ])
-                ->setStatusCode(201);
-        }
-        catch (Exception $ex)
-        {
-            abort(500, 'Erreur serveur');
-        }
-    }
-
     public function logout()
     {
         Auth::user()->tokens()->delete();
