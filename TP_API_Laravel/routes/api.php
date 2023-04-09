@@ -27,6 +27,9 @@ Route::post('users', [UserController::class, 'store']);
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum', 'valid.user');
+Route::put('users/{id}', [UserController::class, 'update'])->middleware('auth:sanctum', 'valid.user');
+Route::put('users/{id}/update_password', [UserController::class, 'updatePassword'])->middleware('auth:sanctum', 'valid.user');
+
 Route::get('films', [FilmController::class, 'index']);
 Route::get('films/{id}', [FilmController::class, 'show']);
 Route::get('films/{id}/actors', [FilmActorController::class, 'index']);
