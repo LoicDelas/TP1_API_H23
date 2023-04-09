@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -32,7 +33,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed'
+        ]);
+
+        try {
+            $user = User::create([
+                'last_name' => $request->last_name,
+                'first_name' => $request->first_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => 2
+            ]);
+
+            return (new UserResource($user))
+            ->response()
+            ->setStatusCode(201);
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur serveur');
+        }
     }
 
     /**
