@@ -26,10 +26,7 @@ Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('register', [LoginController::class, 'register']);
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
-//Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum')->name('profile');
-
-
+Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum', 'valid.user');
 Route::get('films', [FilmController::class, 'index']);
 Route::get('films/{id}', [FilmController::class, 'show']);
 Route::get('films/{id}/actors', [FilmActorController::class, 'index']);
-//::post('login', [LoginController::class, 'authenticate'])->name('login');

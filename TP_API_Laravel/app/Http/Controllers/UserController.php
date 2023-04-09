@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -35,7 +40,17 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            return (new UserResource(User::findOrFail($id)))->response()->setStatusCode(200);
+        }
+        catch(ModelNotFoundException $ex)
+        {
+            abort(404, $ex->getMessage());
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur Serveur');
+        }
     }
 
     /**
