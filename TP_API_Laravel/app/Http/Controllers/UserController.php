@@ -90,17 +90,27 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'last_name' => 'required|max:50',
+            'first_name' => 'required|max:50',
+            'email' => 'required',
+        ]);
+
         $user = $request->user();
         $user->last_name = $request->last_name;
         $user->first_name = $request->first_name;
 
-        if ($user->email != $request->email)
-        {
-            $request->validate(['email' => 'email|unique:users']);
-        }
-
         try {
-            $user->email = $request->email;
+            if ($user->email != $request->email)
+            {
+                $request->validate(['email' => 'email|unique:users']);
+                $user->email = $request->email;
+                foreach ($user->tokens as $token)
+                {
+                    $token->name = 'Jeton de ' . $request->email;
+                    $token->save();
+                }
+            }
             $user->save();
 
             return (new UserResource($user))

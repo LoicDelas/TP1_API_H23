@@ -20,11 +20,12 @@ class LoginController extends Controller
     public function authenticate(Request $request)//: RedirectResponse
     {
         $credentials = $request->validate([
-           'email' => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials))
+        {
             try
             {
                 $user = new UserResource(User::where('email', $credentials['email'])->first());
