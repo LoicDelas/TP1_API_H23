@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Critic::class);
     }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role->name == $role;
+    }
 }

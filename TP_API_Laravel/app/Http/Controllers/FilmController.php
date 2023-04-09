@@ -43,7 +43,7 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'you can add a movie since your admin';
     }
 
     /**
