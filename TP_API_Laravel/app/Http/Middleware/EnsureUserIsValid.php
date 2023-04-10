@@ -18,7 +18,7 @@ class EnsureUserIsValid
     {
         if (Auth::id() != $request->route('id'))
         {
-            abort(401, 'Vous n\'êtes pas autorisé à accéder aux profil de cet utilisateur');
+            abort(403, 'Vous n\'êtes pas autorisé à accéder aux profil de cet utilisateur');
         }
         return $next($request);
     }
