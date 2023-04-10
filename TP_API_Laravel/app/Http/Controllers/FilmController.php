@@ -43,7 +43,29 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:50',
+            'release_year' => 'required|integer|digits:4|min:1900|max:2999',
+            'length' => 'required|integer|min:1|max:999',
+            'description' => 'required',
+            'rating' => 'required|alpha_dash|max:5',
+            'language_id' => 'required|exists:languages,id',
+            'special_features' => 'required|max:200',
+            'image' => 'required|ends_with:jpeg,png,jpg,svg',
+        ]);
+
+        try
+        {
+            $film = Film::create($request->all());
+
+            return (new FilmResource($film))
+                ->response()
+                ->setStatusCode(201);
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur Serveur');
+        }
     }
 
     /**
