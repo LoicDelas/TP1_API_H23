@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CriticController;
 use App\Http\Controllers\FilmActorController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\LoginController;
@@ -28,6 +29,7 @@ Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanc
 
 Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum', 'valid.user');
 Route::put('users/{id}', [UserController::class, 'update'])->middleware('auth:sanctum', 'valid.user');
+
 Route::put('users/{id}/update_password', [UserController::class, 'updatePassword'])
     ->middleware('auth:sanctum', 'valid.user');
 
@@ -36,3 +38,6 @@ Route::delete('films/{id}', [FilmController::class, 'destroy'])->middleware('aut
 Route::get('films', [FilmController::class, 'index']);
 Route::get('films/{id}', [FilmController::class, 'show']);
 Route::get('films/{id}/actors', [FilmActorController::class, 'index']);
+
+Route::post('films/{id}/critics', [CriticController::class, 'store'])
+    ->middleware('auth:sanctum', 'role:membre', 'critic');
