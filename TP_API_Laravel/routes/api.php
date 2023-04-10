@@ -28,9 +28,11 @@ Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanc
 
 Route::get('users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum', 'valid.user');
 Route::put('users/{id}', [UserController::class, 'update'])->middleware('auth:sanctum', 'valid.user');
-Route::put('users/{id}/update_password', [UserController::class, 'updatePassword'])->middleware('auth:sanctum', 'valid.user');
+Route::put('users/{id}/update_password', [UserController::class, 'updatePassword'])
+    ->middleware('auth:sanctum', 'valid.user');
 
 Route::post('films', [FilmController::class, 'store'])->middleware('auth:sanctum', 'role:admin');
+Route::delete('films/{id}', [FilmController::class, 'destroy'])->middleware('auth:sanctum', 'role:admin');
 Route::get('films', [FilmController::class, 'index']);
 Route::get('films/{id}', [FilmController::class, 'show']);
 Route::get('films/{id}/actors', [FilmActorController::class, 'index']);
