@@ -17,7 +17,8 @@ class CriticResource extends JsonResource
         return [
             'score' => $this->score,
             'comment' => $this->comment,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
+            'film_id' => $this->film_id
         ];
     }
 }
