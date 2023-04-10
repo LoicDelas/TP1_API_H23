@@ -21,7 +21,7 @@ class FilmActorController extends Controller
         }
         catch(ModelNotFoundException $ex)
         {
-            abort(404, $ex->getMessage());
+            abort(404, 'Film non trouvé');
         }
         catch (Exception $ex)
         {

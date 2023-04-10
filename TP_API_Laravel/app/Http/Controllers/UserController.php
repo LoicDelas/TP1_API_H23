@@ -14,22 +14,6 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -70,20 +54,12 @@ class UserController extends Controller
         }
         catch(ModelNotFoundException $ex)
         {
-            abort(404, $ex->getMessage());
+            abort(404, 'Utilisateur non trouvé');
         }
         catch (Exception $ex)
         {
             abort(500, 'Erreur Serveur');
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -94,6 +70,7 @@ class UserController extends Controller
         $request->validate([
             'last_name' => 'required|max:50',
             'first_name' => 'required|max:50',
+            'email' => 'required'
         ]);
 
         $user = $request->user();
@@ -105,6 +82,7 @@ class UserController extends Controller
             {
                 $request->validate(['email' => 'email|unique:users']);
                 $user->email = $request->email;
+
                 foreach ($user->tokens as $token)
                 {
                     $token->name = 'Jeton de ' . $request->email;
@@ -148,13 +126,5 @@ class UserController extends Controller
         {
             abort(500, 'Erreur Serveur');
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
