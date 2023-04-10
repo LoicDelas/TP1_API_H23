@@ -108,7 +108,18 @@ class FilmController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Film::findOrFail($id)->delete();
+            return response('', 204);
+        }
+        catch(ModelNotFoundException $ex)
+        {
+            abort(404, $ex->getMessage());
+        }
+        catch (Exception $ex)
+        {
+            abort(500, 'Erreur Serveur');
+        }
     }
 
     private function FilterRequest()
