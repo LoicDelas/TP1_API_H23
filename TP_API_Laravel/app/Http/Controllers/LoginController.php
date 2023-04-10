@@ -48,9 +48,9 @@ class LoginController extends Controller
             }
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email')->setStatusCode(401);
+        return response()->json([
+            'message' => 'Vos informations de connexion ne sont pas valides.',
+        ])->setStatusCode(401);
     }
 
     public function logout()
