@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -93,7 +94,6 @@ class UserController extends Controller
         $request->validate([
             'last_name' => 'required|max:50',
             'first_name' => 'required|max:50',
-            'email' => 'required',
         ]);
 
         $user = $request->user();
@@ -116,6 +116,10 @@ class UserController extends Controller
             return (new UserResource($user))
                 ->response()
                 ->setStatusCode(204);
+        }
+        catch (ValidationException $ex)
+        {
+            throw $ex;
         }
         catch (Exception $ex)
         {
