@@ -1,5 +1,5 @@
 # Description
-API REST développée avec Laravel à des fins de tests développement. Cette API fourni de fausses données sur des films et des critiques d'utilisateurs sur ces films. Cette API peut être utilisée pour développer une application web permettant à des utilisateurs de commenter des films.
+Ce projet est une API REST développée avec Laravel à des fins de tests. Cette API fourni de fausses données sur des films et des critiques d'utilisateurs sur ces films. Cette API peut être utilisée pour développer une application web permettant à des utilisateurs de commenter des films.
 
 # Installation
 ## Prérequis
@@ -39,3 +39,21 @@ php artisan db:seed
 ```
 php artisan serve
 ```
+
+# Routes
+
+| Verb   | Route                                   |
+|--------|-----------------------------------------|
+| POST   | api/films                               |
+| GET    | api/films                               |
+| DELETE | api/films/{id}                          |
+| GET    | api/films/{id}                          |
+| GET    | api/films/{id}/actors                   |
+| POST   | api/films/{id}/critics                  |
+| POST   | api/login                               |
+| POST   | api/logout                              |
+| GET    | api/user                                |
+| POST   | api/users                               |
+| GET    | api/users/{id}                          |
+| PUT    | api/users/{id}                          |
+| PUT    | api/users/{id}/update_password          |
