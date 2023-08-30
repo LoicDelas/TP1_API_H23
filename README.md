@@ -5,7 +5,7 @@ Ce projet est une API REST développée avec Laravel à des fins de tests. Cette
 ## Prérequis
 PHP 8.0
 
-[Composer](https://getcomposer.org/doc/00-intro.md) : Composer est un outil de gestion des dépendances en PHP. Il vous permet de déclarer les bibliothèques dont dépend votre projet et il les gérera (installation/mise à jour) pour vous.
+[Composer](https://getcomposer.org/doc/00-intro.md) : Composer est un outil de gestion des dépendances en PHP. Il permet de déclarer les bibliothèques dont dépend votre projet et il les gérera (installation/mise à jour) pour vous.
 
 ## Étapes
 
@@ -60,8 +60,8 @@ php artisan serve
 | PUT    | api/users/{id}/update_password          | Modifier le mot de passe d'un utilisateur                      | Connection avec cet utilisateur nécessaire |
 
 ## Documentation OpenAPI
-Une documentation OpenAPI complète est générée par [Scramble](https://scramble.dedoc.co/)https://scramble.dedoc.co/
-Lorsque l'API est lancée, la route /docs/api permet de consulter la documentation OpenAPI.
+Une documentation OpenAPI complète est générée par [Scramble](https://scramble.dedoc.co/).
+Lorsque l'API est lancée, la route `/docs/api` permet de consulter la documentation OpenAPI.
 
 ![image](https://github.com/LoicDelas/TP1_API_H23/assets/97980855/ed15d2ee-395b-4de9-9e92-cd96c1593f37)
 
