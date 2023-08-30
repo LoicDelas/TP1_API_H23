@@ -1,6 +1,8 @@
 # Description
 Ce projet est une API REST développée avec Laravel à des fins de tests. Cette API fourni de fausses données sur des films et des critiques d'utilisateurs sur ces films. Cette API peut être utilisée pour développer une application web permettant à des utilisateurs de commenter des films.
 
+Cette API offre des fonctionnalités d'authentification avec Sanctum. Il est possible de créer des comptes administrateurs ou des comptes membres.
+
 # Installation
 ## Prérequis
 PHP 8.0
@@ -21,20 +23,24 @@ composer install --no-scripts
 ```
 
 3. Créer une base de donnée MySQL
+
 4. Copier le fichier *.env.example* et le nommer *.env*. Dans ce fichier, renseigner le nom de la BD, le nom d'utilisateur et le mot de passe MySQL
 ```
 DB_DATABASE=nomBD
 DB_USERNAME=username
 DB_PASSWORD=password
 ```
+
 5. Lancer la migration
 ```
 php artisan migrate
 ```
+
 6. Seeder la base de données
 ```
 php artisan db:seed
 ```
+
 7. Lancer l'API
 ```
 php artisan serve
